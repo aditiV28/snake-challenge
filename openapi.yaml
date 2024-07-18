@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  title: Snake Challenge
+  description: API for validating the snake game
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local server
+    
+paths:
+  /new:
+    get:
+      summary: Get new snake state with randomly generated fruit position
+      parameters:
+        - in: query
+          required: true
+          name: width
+          schema:
+            type: integer
+        - in: query
+          required: true
+          name: height
+          schema:
+            type: integer
+            
+      responses:
+        '200':
+          description: New state and fruit position generated!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gameId:
+                    type: string
+                    example: "bf257068-01f7-4603-a393-26c1f9bb438c"
+                  width:
+                    type: integer
+                  height:
+                    type: integer
+                  score:
+                    type: integer
+                  fruit:
+                    type: object
+                    properties:
+                      x:
+                        type: integer
+                      y:
+                        type: integer
+                  snake:
+                    type: object
+                    properties:
+                      x:
+                        type: integer
+                      y:
+                        type: integer
+                      velX:
+                        type: integer
+                      velY:
+                        type: integer
+              
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                properties: 
+                  message:
+                    type: string
+                    
+        '405':
+          description: Invalid method
+          content:
+            application/json:
+              schema:
+                properties: 
+                  message:
+                    type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                properties: 
+                  message:
+                    type: string
+  /validate:
+    post:
+      summary: Validate moves
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gameId:
+                  type: string
+                  example: "bf257068-01f7-4603-a393-26c1f9bb438c"
+                width:
+                  type: integer
+                height:
+                  type: integer
+                score:
+                  type: integer
+                fruit:
+                  type: object
+                  properties:
+                    x:
+                      type: integer
+                    y:
+                      type: integer
+                snake:
+                  type: object
+                  properties:
+                    x:
+                      type: integer
+                    y:
+                      type: integer
+                    velX:
+                      type: integer
+                    velY:
+                      type: integer
+                ticks:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      velX:
+                        type: integer
+                      velY:
+                        type: integer
+      responses:
+        '200':
+          description: Valid state & ticks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gameId:
+                    type: string
+                  width:
+                    type: integer
+                  height:
+                    type: integer
+                  score:
+                    type: integer
+                  fruit:
+                    type: object
+                    properties:
+                      x:
+                        type: integer
+                      y:
+                        type: integer
+                  snake:
+                    type: object
+                    properties:
+                      x:
+                        type: integer
+                      y:
+                        type: integer
+                      velX:
+                        type: integer
+                      velY:
+                        type: integer
+        '400':
+          description: Invalid request
+        '404':
+          description: Fruit not found!!
+        '405':
+          description: Invalid method
+        '418':
+          description: Game over!Snake went out of bounds!
+        '500':
+          description: Internal server error
