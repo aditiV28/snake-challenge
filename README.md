@@ -13,5 +13,5 @@ In order to execute the program:
 6. You can then use application like Postman to test your API
 
 
-Find the openapi.yml file for details on endpoints, input and output formats.
+For API endpoints and documentation, error handling and input-output expected formats please refer to the openapi.yml file. Copy-paste the openapi.yml file into a swagger editor (https://editor.swagger.io/) to get a better understanding.
      
